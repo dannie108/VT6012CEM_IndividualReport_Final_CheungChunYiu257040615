@@ -1,0 +1,667 @@
+/* ============================================================
+   App.css - Consolidated and cleaned (English comments)
+   - Each section is separated with a clear comment header.
+   - Paste this entire file to replace your current App.css.
+   ============================================================ */
+
+/* ========== Variables & Reset ========== */
+:root {
+  --brand-blue: #2ea3f2;
+  --dark-blue: #003087;
+  --muted: #666;
+  --accent: #d32f2f;
+  --border: #ddd;
+  --bg: #f8f8f8;
+  --text: #333;
+  --white: #fff;
+  --shadow: 0 4px 12px rgba(0,0,0,0.1);
+  --focus-outline: rgba(46,163,242,0.25);
+}
+
+html, body { height: 100%; }
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* ========== Base / Body ========== */
+body {
+  font-family: Arial, sans-serif;
+  background: var(--brand-blue); /* page background color */
+  color: var(--text);
+  line-height: 1.5;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Main content area (boxed) */
+.main-content {
+  background: var(--bg);
+  margin-left: 220px;
+  padding: 30px;
+  flex: 1 0 auto;
+  box-sizing: border-box;
+}
+
+/* ============================================================
+   Header
+   ============================================================ */
+.top-header {
+  background: var(--brand-blue);
+  color: var(--white);
+  padding: 12px 0;
+  font-size: 15px;
+}
+
+.header-inner {
+  max-width: 85.5%;
+  margin-left: auto;
+  margin-right: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  gap: 16px;
+}
+
+/* Search area */
+.header-search {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 0 0 auto;
+}
+
+.header-search-input {
+  width: 320px;
+  max-width: 40vw;
+  padding: 8px 10px;
+  border-radius: 4px;
+  border: none;
+  box-sizing: border-box;
+  background: rgba(255,255,255,0.95);
+  color: #111;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  font-size: 14px;
+}
+
+/* Hide any leftover search button */
+.search-btn { display: none !important; }
+
+/* Search suggestions dropdown */
+.search-suggestions {
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin-top: 20px;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+  max-height: 260px;
+  overflow: auto;
+  z-index: 2000;
+  padding: 6px;
+  list-style: none;
+}
+
+.search-suggestion-item {
+  padding: 8px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.search-suggestion-item:hover,
+.search-suggestion-item[aria-selected="true"] {
+  background: #f0f8ff;
+}
+
+/* Right-side group in header */
+.right-group {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.contact-info span { margin-right: 25px; }
+.contact-info a { color: var(--white); text-decoration: none; }
+.main-nav ul { display: flex; list-style: none; gap: 25px; margin: 0; padding: 0; }
+.main-nav a { color: var(--white); text-decoration: none; font-weight: 500; }
+.cart {
+  background: rgba(255,255,255,0.2);
+  padding: 6px 14px;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+/* Accessibility focus styles for header */
+.header-inner a { text-decoration: none; color: inherit; }
+.header-inner a:focus-visible,
+.header-search-input:focus-visible,
+.search-suggestion-item:focus-visible {
+  outline: 3px solid var(--focus-outline);
+  outline-offset: 2px;
+}
+
+/* Logo */
+.logo { font-size: 24px; font-weight: bold; margin: 20px; }
+
+/* ============================================================
+   Sidebar & Flyout
+   - Left navigation and flyout panels
+   ============================================================ */
+.sidebar {
+  background: var(--brand-blue);
+  color: var(--white);
+  width: 220px;
+  position: fixed;
+  padding-top: 20px;
+  height: 100%;
+}
+
+.sidebar ul { list-style: none; margin: 0; padding: 0; }
+
+.sidebar li {
+  padding: 14px 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.15);
+  position: relative;
+}
+.sidebar a { color: var(--white); text-decoration: none; display: block; }
+.sidebar a:hover { background: #00246b; }
+
+.sidebar, .sidebar * { box-sizing: border-box; }
+.sidebar a, .sidebar .item-label { white-space: nowrap; text-overflow: ellipsis; overflow: hidden; }
+
+.has-flyout { cursor: pointer; }
+
+/* Flyout panel */
+.sidebar .flyout {
+  position: absolute;
+  left: calc(100% + 8px);
+  top: 50%;
+  transform: translateY(-50%);
+  width: 360px;
+  background: #0b2a66;
+  color: var(--white);
+  border-radius: 6px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.35);
+  padding: 14px;
+  display: flex;
+  gap: 18px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s;
+  z-index: 999;
+  pointer-events: none;
+  box-sizing: border-box;
+}
+
+.sidebar .flyout ul { list-style: none; margin: 0; padding: 0; }
+.sidebar .flyout li { padding: 6px 0; }
+.sidebar .flyout a { color: var(--white); text-decoration: none; display: block; }
+
+.sidebar .has-flyout:hover > .flyout,
+.sidebar .has-flyout:focus-within > .flyout,
+.sidebar .has-flyout > .flyout:hover {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(-50%) translateX(0);
+  pointer-events: auto;
+  z-index: 999;
+}
+
+/* Hover area extension and arrow indicator for flyouts */
+.sidebar .item-label::after { display: none; }
+.sidebar .has-flyout > .item-label { padding-right: 28px; }
+.sidebar .has-flyout::before {
+  content: "";
+  position: absolute;
+  right: -18px; top: 0; bottom: 0;
+  width: 18px;
+  pointer-events: auto;
+}
+
+.sidebar .has-flyout > .item-label::after {
+  content: "";
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  width: 8px;
+  height: 8px;
+  transform: translateY(-50%) rotate(45deg);
+  border-right: 2px solid rgba(255,255,255,0.95);
+  border-bottom: 2px solid rgba(255,255,255,0.95);
+  transition: transform 0.18s ease, border-color 0.18s;
+  pointer-events: none;
+  display: block;
+  z-index: 99;
+}
+.sidebar .has-flyout:hover > .item-label::after,
+.sidebar .has-flyout:focus-within > .item-label::after {
+  transform: translateY(-50%) translateX(4px) rotate(45deg);
+  border-color: #ffd;
+}
+
+.sidebar .item-label {
+  position: relative;
+  padding-right: 0;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.sidebar .has-flyout::after { content: none !important; }
+
+.sidebar .has-flyout .item-label::after {
+  border-color: #fff;
+  opacity: 1;
+}
+
+.sidebar .has-flyout:hover .item-label::after,
+.sidebar .has-flyout:focus-within .item-label::after {
+  transform: translateY(-50%) translateX(4px) rotate(45deg);
+  border-color: #ffd;
+}
+
+.sidebar .has-flyout.flyout-open > .flyout {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(-50%) translateX(0);
+  pointer-events: auto;
+}
+
+/* Top-aligned variant */
+.flyout--top {
+  top: auto;
+  bottom: 0;
+  transform: translateY(0);
+}
+
+/* Hide flyouts on small screens */
+@media (max-width: 768px) {
+  .flyout { display: none !important; }
+  .sidebar { position: static; width: 100%; height: auto; top: 0; }
+  .main-content { margin-left: 0; padding: 20px; }
+}
+
+/* ============================================================
+   Breadcrumb / Page Title
+   ============================================================ */
+.breadcrumb { color: #666; font-size: 14px; margin-bottom: 15px; }
+
+.breadcrumb a {
+  text-decoration: none;
+  color: var(--dark-blue);
+}
+
+.breadcrumb a:focus-visible {
+  outline: 3px solid var(--focus-outline);
+  outline-offset: 2px;
+}
+
+.page-title { font-size: 26px; color: var(--dark-blue); margin-bottom: 20px; }
+
+/* ============================================================
+   Listing / Filter / Grid
+   ============================================================ */
+.listing-container { display: flex; gap: 30px; align-items: stretch; }
+
+.filter-panel {
+  width: 240px;
+  background: var(--white);
+  padding: 20px;
+  border: 1px solid var(--border);
+  height: 100%;
+}
+.filter-panel h3 { margin-bottom: 15px; color: var(--dark-blue); }
+
+.detail-categories { margin-bottom: 25px; }
+.detail-categories ul { list-style: none; margin: 0; padding: 0; }
+.detail-categories li { padding: 8px 0; border-bottom: 1px solid #eee; }
+.detail-categories a { color: var(--text); text-decoration: none; }
+.detail-categories a:hover { color: var(--brand-blue); }
+
+/* Product grid (general) */
+.product-grid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+}
+
+/* Unified button base */
+.btn {
+  display: inline-block;
+  padding: 10px 16px;
+  background: var(--brand-blue);
+  color: var(--white);
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  text-align: center;
+  font-size: 14px;
+}
+.btn:focus-visible {
+  outline: 3px solid var(--focus-outline);
+  outline-offset: 2px;
+}
+
+/* ============================================================
+   Product Listing Card
+   ============================================================ */
+.product-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  padding: 15px;
+  text-align: left;
+  transition: 0.3s;
+}
+.product-card:hover { box-shadow: var(--shadow); }
+.product-card img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  margin-bottom: 12px;
+}
+.model-code { color: var(--accent); font-weight: bold; font-size: 15px; }
+.product-card button {
+  margin-top: 12px;
+  padding: 10px 20px;
+  background: var(--brand-blue);
+  color: var(--white);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 100%;
+}
+
+/* ============================================================
+   Categories Grid & Category Card
+   - Prevent link underline artifacts and ensure image-first layout
+   ============================================================ */
+.categories-inner,
+.categories {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 15px;
+  align-items: start;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Card wrapper (Link) — keep in flow and remove underline */
+.category-card {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border: 1px solid #ddd;
+  padding: 0;
+  text-align: left;
+  transition: box-shadow .3s, transform .12s;
+  height: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Ensure nested anchors don't show underline */
+.category-card a {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+/* Image fills horizontally; remove border-bottom that looks like an underline */
+.category-card img {
+  display: block;
+  width: 100%;
+  height: 260px;
+  object-fit: cover;
+  object-position: center;
+  border-bottom: none;
+  vertical-align: middle;
+}
+
+.category-card .category-body {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 6px;
+  min-height: 48px;
+  box-sizing: border-box;
+}
+
+.category-card h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  color: #000;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.category-card p {
+  margin: 0;
+  font-size: 13px;
+  color: rgba(0,0,0,0.6);
+  line-height: 1.2;
+}
+
+/* Hover / focus */
+.category-card:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  transform: translateY(-4px);
+}
+.category-card:focus-visible,
+.category-card a:focus-visible {
+  outline: 3px solid rgba(46,163,242,0.18);
+  outline-offset: 2px;
+  text-decoration: none;
+}
+
+/* Defensive overrides in case global rules force underlines/borders */
+.category-card,
+.category-card * {
+  text-decoration: none !important;
+  border-bottom: none !important;
+}
+
+/* ============================================================
+   Product Detail
+   - A: Original left-image layout (default)
+   - B: Image-first banner layout (commented out; enable if needed)
+   ============================================================ */
+
+/* A: Original left-image layout */
+.product-container {
+  display: flex;
+  gap: 40px;
+  background: var(--white);
+  padding: 25px;
+  border: 1px solid var(--border);
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+.product-image {
+  width: 380px;
+  height: 380px;
+  background: #f0f0f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border);
+}
+.product-image img { max-width: 100%; max-height: 100%; }
+.product-info { flex: 1; }
+.product-title { font-size: 22px; margin-bottom: 15px; color: var(--dark-blue); }
+.specs { line-height: 1.2; font-size: 15px; }
+.add-quote-btn {
+  background: var(--brand-blue);
+  color: var(--white);
+  border: none;
+  padding: 14px 32px;
+  font-size: 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 25px;
+}
+.description {
+  margin-top: 40px;
+  background: var(--white);
+  padding: 25px;
+  border: 1px solid var(--border);
+}
+
+/* B: Image-first banner layout (uncomment to use)
+.product-container {
+  display: block;
+  background: var(--white);
+  padding: 0;
+  border: 1px solid var(--border);
+  box-sizing: border-box;
+}
+.product-image {
+  width: 100%;
+  height: 360px;
+  background: #f0f0f0;
+  display: block;
+  overflow: hidden;
+  position: relative;
+  border: none;
+  border-radius: 6px 6px 0 0;
+}
+.product-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+.product-info {
+  padding: 20px 24px;
+  background: var(--white);
+  display: block;
+  box-sizing: border-box;
+}
+.product-title { font-size: 20px; margin-bottom: 10px; color: var(--dark-blue); }
+.specs { line-height: 1.6; font-size: 14px; margin-bottom: 12px; }
+.add-quote-btn { padding: 12px 24px; font-size: 15px; margin-top: 12px; }
+.description {
+  margin-top: 18px;
+  background: var(--white);
+  padding: 20px;
+  border-top: 1px solid var(--border);
+  box-sizing: border-box;
+}
+@media (min-width: 1200px) { .product-image { height: 480px; } }
+@media (max-width: 720px) { .product-image { height: 260px; } .product-info { padding: 14px; } .description { padding: 14px; } }
+*/
+
+/* ============================================================
+   Listing grid (fixed 4 columns, enlarged cards)
+   - Non-responsive version (keeps fixed card size)
+   ============================================================ */
+.listing-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 300px); /* 4 columns, 300px each */
+  gap: 20px;
+  justify-content: start;    /* left aligned; right side remains empty if fewer items */
+  align-items: start;
+  width: 100%;
+  box-sizing: border-box;
+  grid-auto-rows: auto;
+  padding: 0;
+}
+
+/* Listing item card */
+.listing-grid .listing-item {
+  width: 300px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  cursor: pointer;
+  border: 1px solid #ddd;
+  padding: 16px;
+  border-radius: 8px;
+  background: var(--white);
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+
+/* Hover / focus for listing items */
+.listing-grid .listing-item:hover {
+  box-shadow: var(--shadow);
+  transform: translateY(-4px);
+}
+.listing-grid .listing-item:focus-visible {
+  outline: 3px solid var(--focus-outline);
+  outline-offset: 2px;
+}
+
+/* Listing item image and text */
+.listing-grid .listing-item img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  display: block;
+  border-radius: 4px;
+}
+.listing-grid .listing-item h4 { margin: 8px 0; font-size: 17px; }
+.listing-grid .listing-item p { margin: 6px 0; font-size: 14px; }
+
+/* Buttons inside listing items */
+.listing-grid .listing-item button {
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  border: none;
+}
+
+/* Prevent inline styles from overriding card width (defensive) */
+.listing-grid .listing-item[style] {
+  width: 300px !important;
+}
+
+/* ============================================================
+   Footer
+   ============================================================ */
+footer {
+  width: 100%;
+  background: var(--brand-blue);
+  color: var(--white);
+  text-align: center;
+  padding: 20px 16px;
+  box-sizing: border-box;
+  margin-top: auto;
+}
+footer .footer-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+footer a { color: var(--white); }
+footer a:focus-visible { outline: 3px solid rgba(255,255,255,0.18); outline-offset: 2px; }
+
+/* ============================================================
+   Responsive tweaks (kept minimal)
+   - These rules only adjust layout for narrow screens where necessary
+   ============================================================ */
+@media (max-width: 1024px) {
+  .sidebar { position: static; width: 100%; height: auto; top: 0; }
+  .main-content { margin-left: 0; padding: 20px; }
+  .product-grid { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+  .product-image { width: 100%; height: auto; }
+  .product-container { flex-direction: column; gap: 20px; }
+}
+
+@media (max-width: 900px) {
+  .categories-inner { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 480px) {
+  .categories-inner { grid-template-columns: 1fr; position: static; }
+  .categories-bar { position: static; top: auto; padding: 0; }
+  .category-card img { height: 160px; }
+}
