@@ -1,4 +1,4 @@
-// src/components/Header.tsx
+
 import React, { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { products } from '../src/data/products';
@@ -123,7 +123,7 @@ const Header: React.FC = () => {
   return (
     <header className="top-header">
       <div className="header-inner">
-        {/* 搜尋區塊（縮短寬度由 CSS 控制） */}
+
         <div className="header-search" ref={containerRef} style={{ flex: '0 0 auto' }}>
           <input
             ref={inputRef}
@@ -139,7 +139,7 @@ const Header: React.FC = () => {
               borderRadius: 4,
               border: 'none',
               boxSizing: 'border-box',
-              width: '500px', // 預設寬度（可由 CSS 調整）
+              width: '500px', 
               maxWidth: '40vw',
             }}
           />

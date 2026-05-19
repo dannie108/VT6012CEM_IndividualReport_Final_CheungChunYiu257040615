@@ -1,4 +1,4 @@
-// src/pages/Home.tsx
+
 import React from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { categories, products } from '../src/data/products';
@@ -8,7 +8,7 @@ const Home: React.FC = () => {
   const location = useLocation();
   const hotProducts = products.slice(0, 3);
 
-  // 組成要傳給 ProductDetail 的 state（from 為目前路徑 + search）
+
   const from = location.pathname + location.search;
   const baseLinkState = {
     from,

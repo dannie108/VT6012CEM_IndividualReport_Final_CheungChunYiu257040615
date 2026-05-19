@@ -1,7 +1,7 @@
-// src/pages/ProductDetail.tsx
+
 import React from 'react';
 import { useParams, useLocation, Link } from 'react-router-dom';
-import { products, categories } from '../src/data/products'; // 確認 categories 有 export
+import { products, categories } from '../src/data/products'; 
 
 const QUOTE_KEY = 'quoteItems';
 
@@ -42,7 +42,7 @@ const ProductDetail: React.FC = () => {
   const product = products.find((p) => p.id === id);
   const location = useLocation();
 
-  // state from ListingPage (if present)
+
   const state = (location.state as any) || {};
   const from = state.from || null; // e.g. "/listing" or "/listing?..."
   const fromCategory = state.category || null;
@@ -62,7 +62,7 @@ const ProductDetail: React.FC = () => {
   };
 
 
-  // 中文顯示名稱（優先使用 state 的 key，再 fallback 到 product 的 category）
+
   const displayCategoryKey = fromCategory || product.category;
   const displaySubKey = fromSubcategory || product.subcategory;
   const displayCategoryTitle = findCategoryTitle(displayCategoryKey);
@@ -86,10 +86,10 @@ const ProductDetail: React.FC = () => {
         <span>/</span>
 
         {from ? (
-          // 若有完整 from（包含 search），直接 link 回 from（保留 query）
+  
           <Link to={from}>{displayCategoryTitle || '商品列表'}</Link>
         ) : (
-          // 沒有 from，導到 /listing 並帶 state（不改 URL）
+
           <Link to="/listing" {...linkStateForListing(displayCategoryKey, displaySubKey)}>
             {displayCategoryTitle || '商品列表'}
           </Link>

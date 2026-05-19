@@ -1,4 +1,4 @@
-// src/pages/ListingPage.tsx
+
 import React, { useMemo, useState } from 'react';
 import { useLocation, Link, useNavigate } from 'react-router-dom';
 import { categories, products } from '../src/data/products';
@@ -103,7 +103,7 @@ const ListingPage: React.FC = () => {
 
   return (
     <div className="main-content" style={{ display: 'flex', gap: 24 }}>
-      {/* 左側分類欄 */}
+   
       <aside style={{ width: 280 }}>
         <h3>商品分類</h3>
 
@@ -161,7 +161,7 @@ const ListingPage: React.FC = () => {
         </div>
       </aside>
 
-      {/* 右側產品列表 */}
+
       <section style={{ flex: 1 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <div>
@@ -176,7 +176,7 @@ const ListingPage: React.FC = () => {
           </div>
         </div>
 
-        {/* 使用 className="listing-grid"，卡片使用 listing-item */}
+  
         <div className="listing-grid" style={{ marginTop: 12 }}>
           {filteredProducts.map((p: Product) => (
             <div
